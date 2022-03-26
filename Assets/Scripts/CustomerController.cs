@@ -11,11 +11,12 @@ public class CustomerController : MonoBehaviour
     public Transform targetWindow;
     public Transform targetCustomer=null;
     public Transform targetExit = null;
+    public GameObject timerCanvas;
 
     public bool InService { get; set; }
     public GameObject atmWindow;
     public Queue queueManager;
-    public Text Timer;
+    //public Text Timer;
     public float elapsedSeconds = 0f;
 
     public enum CustomerState
@@ -36,7 +37,6 @@ public class CustomerController : MonoBehaviour
 #if DEBUG_CC
         print("Start: this.GO.ID=" + this.gameObject.GetInstanceID());
 #endif
-
         //
         customerState = CustomerState.Entered;
         FSMCustomer();
@@ -67,6 +67,11 @@ public class CustomerController : MonoBehaviour
 
         }
     }
+
+    public void OrderComplete()
+    {
+        ChangeState(CustomerState.Serviced);
+    }
     void DoEntered()
     {
 
@@ -81,6 +86,7 @@ public class CustomerController : MonoBehaviour
     void DoInService()
     {
         navMeshAgent.isStopped = true;
+        
     }
     void DoServiced()
     {
@@ -96,7 +102,7 @@ public class CustomerController : MonoBehaviour
     public void FixedUpdate()
     {
         elapsedSeconds += Time.deltaTime;
-        Timer.text = elapsedSeconds.ToString();
+        //Timer.text = elapsedSeconds.ToString();
 
     }
     public void SetInService(bool value)
