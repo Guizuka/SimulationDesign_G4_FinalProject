@@ -21,7 +21,8 @@ public enum Additions
     Chocolate,
     Strawberry,
     Vanilla,
-    Maple
+    Maple,
+    Peppermint
 }
 
 public class Order
