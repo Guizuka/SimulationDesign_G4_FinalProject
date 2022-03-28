@@ -18,10 +18,16 @@ public class Service : MonoBehaviour
     // minimum and maximum interservice time in seconds
     public float minInterServiceTimeInSeconds = 3;
     public float maxInterServiceTimeInSeconds = 60;
-
+    public System.Array sizeValues, baseValues, additionsValues;
+    public System.Type type;
+    public Size orderedSize;
+    public Base orderedBase;
+    public List<Additions> orderedAdditions;
+    public Order order;
     Queue queueManager;
 
     public Text Timer;
+    public Text orderText;
     public float elapsedSeconds = 0f;
 
     public float timeScale = 1;
@@ -71,8 +77,46 @@ public class Service : MonoBehaviour
         }
     }
 
+    public void GetRandomOrderValues()
+    {
+        orderedAdditions.Clear();
+        orderText.text = "Order: ";
+        int index;
+        System.Random random = new System.Random();
+        type = typeof(Size);
+        sizeValues = type.GetEnumValues();
+        index = random.Next(sizeValues.Length);
+        orderedSize = (Size)sizeValues.GetValue(index);
+        orderText.text += ("\nSize: " + orderedSize);
+
+        type = typeof(Base);
+        baseValues = type.GetEnumValues();
+        index = random.Next(baseValues.Length);
+        orderedBase = (Base)baseValues.GetValue(index);
+        orderText.text += ("\nBase: " + orderedBase);
+
+        type = typeof(Additions);
+        additionsValues = type.GetEnumValues();
+        int numberOfAdditions = random.Next(1, 5);
+        Additions addition;
+        for (int i = 0; i <= numberOfAdditions; i++)
+        {
+            // Get random num from the Additions enum
+            index = random.Next(additionsValues.Length);
+            addition = (Additions)additionsValues.GetValue(index);
+            orderedAdditions.Add(addition);
+        }
+        orderText.text += ("\nAdditions: ");
+        foreach (var add in orderedAdditions)
+        {
+            orderText.text += "\n" + add;
+        }
+    }
+
     IEnumerator GenerateServices()
     {
+        GetRandomOrderValues();
+        order = new Order(orderedAdditions, orderedSize, orderedBase);
         while (generateServices)
         {
             float timeToNextServiceInSec = interServiceTimeInSeconds;
