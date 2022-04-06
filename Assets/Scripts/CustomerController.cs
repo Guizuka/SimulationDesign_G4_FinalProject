@@ -18,6 +18,10 @@ public class CustomerController : MonoBehaviour
     public Queue queueManager;
     //public Text Timer;
     public float elapsedSeconds = 0f;
+    public GameController gameController;
+    public int customerNumber;
+    public Text customerTimer;
+    Timer timerScript;
 
     public enum CustomerState
     {
@@ -34,6 +38,8 @@ public class CustomerController : MonoBehaviour
         targetWindow = GameObject.FindGameObjectWithTag("ATMWindow").transform;
         targetExit = GameObject.FindGameObjectWithTag("CustomerExit").transform;
         navMeshAgent = GetComponent<NavMeshAgent>();
+        customerTimer = this.gameObject.GetComponentInChildren<Text>();
+        timerScript = customerTimer.GetComponent<Timer>();
 #if DEBUG_CC
         print("Start: this.GO.ID=" + this.gameObject.GetInstanceID());
 #endif
@@ -86,6 +92,7 @@ public class CustomerController : MonoBehaviour
     void DoInService()
     {
         navMeshAgent.isStopped = true;
+        
         
     }
     void DoServiced()

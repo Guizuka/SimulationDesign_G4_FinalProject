@@ -2344,6 +2344,7 @@ GameObject:
   - component: {fileID: 872710065}
   - component: {fileID: 872710064}
   - component: {fileID: 872710063}
+  - component: {fileID: 872710066}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -2399,6 +2400,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &872710066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 872710062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c840399d6de7e046ad050b99222078b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &878611916
 GameObject:
   m_ObjectHideFlags: 0
@@ -3235,7 +3248,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1135202080}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -3876337905059138600, guid: ce0cab47d9abd6749997c64d7b70c378,
+          type: 3}
+        m_MethodName: OrderComplete
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1135202080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4617,9 +4642,6 @@ MonoBehaviour:
   mapleBtn: {fileID: 339285373}
   peppermintBtn: {fileID: 386318666}
   submitBtn: {fileID: 1135202079}
-  createOrder: 
-  orderList: 
-  orderMessage: 
   serviceIntervalTimeStrategy: 0
 --- !u!114 &1741770769
 MonoBehaviour:
