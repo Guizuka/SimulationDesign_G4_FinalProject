@@ -82,8 +82,12 @@ public class Service : MonoBehaviour
         {
             customerInService = other.gameObject;
             customerInService.GetComponent<CustomerController>().SetInService(true);
-            generateServices = true;
-            StartCoroutine(GenerateServices());
+
+            GetRandomOrderValues();
+            order = new Order(orderedAdditions, orderedSize, orderedBase);
+
+            //generateServices = true;
+            //StartCoroutine(GenerateServices());
         }
     }
 
@@ -128,6 +132,8 @@ public class Service : MonoBehaviour
     {
         GetRandomOrderValues();
         order = new Order(orderedAdditions, orderedSize, orderedBase);
+
+        
         while (generateServices)
         {
             float timeToNextServiceInSec = interServiceTimeInSeconds;

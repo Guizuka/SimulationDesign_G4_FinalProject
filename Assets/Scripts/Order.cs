@@ -25,16 +25,20 @@ public enum Additions
     Peppermint
 }
 
+
+
 public class Order
 {
     private Size order_size;
     private Base order_base;
     private List<Additions> order_additions;
 
+
     public Order(Size _size = Size.Small, Base _base = Base.Coffee)
     {
         order_size = _size;
         order_base = _base;
+
     }
     public Order(List<Additions> additions, Size _size = Size.Small, Base _base = Base.Coffee)
     {
