@@ -35,7 +35,7 @@ public class Service : MonoBehaviour
     public Slider sliderTScale;
     public Dropdown sizeDropDown;
     public Dropdown baseDropDown;
-    public Button caramelBtn, chocolateBtn, strawberryBtn, vanillaBtn, mapleBtn, peppermintBtn;//, submitBtn;
+    public Button caramelBtn, chocolateBtn, strawberryBtn, vanillaBtn, mapleBtn, peppermintBtn, submitBtn;
 
     private string createOrder = "";
     private string orderList = "";
@@ -57,19 +57,23 @@ public class Service : MonoBehaviour
         interServiceTimeInHours = 1.0f / serviceRateAsCustomersPerHour;
         interServiceTimeInMinutes = interServiceTimeInHours * 60;
         interServiceTimeInSeconds = interServiceTimeInMinutes * 60;
-        //CreateOrder();
+
+        createOrder = "Order: ";
         submitBtn.onClick.AddListener(CompareOrder);
-        sizeDropDown = GetComponent<Dropdown>();
+
         sizeDropDown.onValueChanged.AddListener(delegate
         {
-            CreateOrderList($"\nSize :\n{sizeDropDown}");
+            Debug.Log(sizeDropDown.options[sizeDropDown.value].text);
+            CreateOrderList($"\nSize: {sizeDropDown.options[sizeDropDown.value].text}");
         });
 
-        baseDropDown = GetComponent<Dropdown>();
         baseDropDown.onValueChanged.AddListener(delegate
         {
-            CreateOrderList($"\nBase :\n{sizeDropDown}");
+            Debug.Log(baseDropDown.options[sizeDropDown.value].text);
+            CreateOrderList($"\nBase: {baseDropDown.options[sizeDropDown.value].text}");
         });
+
+
 
         caramelBtn.onClick.AddListener(CaramelOnClick);
         chocolateBtn.onClick.AddListener(ChocolatelOnClick);
@@ -83,7 +87,6 @@ public class Service : MonoBehaviour
     {
         timeScale = sliderTScale.value;
 
-        submitBtn.onClick.AddListener(CompareOrder);
 
         
 
@@ -93,8 +96,8 @@ public class Service : MonoBehaviour
     {
         elapsedSeconds += Time.deltaTime;
         Timer.text = "Total time in seconds: " + elapsedSeconds.ToString();
-        Debug.Log(orderList);
-        Debug.Log(createOrder);
+        //Debug.Log(orderList);
+        //Debug.Log(createOrder);
     }
     private void OnTriggerEnter(Collider other)
     {
