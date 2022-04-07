@@ -10,7 +10,7 @@ public class CustomerController : MonoBehaviour
     NavMeshAgent navMeshAgent;
     public Transform targetWindow;
     public Transform targetCustomer=null;
-    public Transform targetExit = null;
+    public Transform targetExit ;
     public GameObject timerCanvas;
 
     public bool InService { get; set; }
@@ -32,10 +32,10 @@ public class CustomerController : MonoBehaviour
     }
     public CustomerState customerState = CustomerState.None;
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         atmWindow = GameObject.FindGameObjectWithTag("ATMWindow");
-        targetWindow = GameObject.FindGameObjectWithTag("ATMWindow").transform;
+        targetWindow = atmWindow.transform;
         targetExit = GameObject.FindGameObjectWithTag("CustomerExit").transform;
         navMeshAgent = GetComponent<NavMeshAgent>();
         customerTimer = this.gameObject.GetComponentInChildren<Text>();
@@ -95,9 +95,12 @@ public class CustomerController : MonoBehaviour
         
         
     }
-    void DoServiced()
+    public void DoServiced()
     {
-        navMeshAgent.SetDestination(targetExit.position);
+        ChangeState(CustomerState.Serviced);
+        
+        navMeshAgent.(targetExit.position);
+        Debug.Log("In here");
         navMeshAgent.isStopped = false;
     }
     public void ChangeState(CustomerState newCarState)
@@ -110,7 +113,7 @@ public class CustomerController : MonoBehaviour
     {
         elapsedSeconds += Time.deltaTime;
         //Timer.text = elapsedSeconds.ToString();
-
+        FSMCustomer();
     }
     public void SetInService(bool value)
     {
@@ -126,24 +129,29 @@ public class CustomerController : MonoBehaviour
 #if DEBUG_CC
         Debug.LogFormat("CarController(this={0}).OnTriggerEnter:other={1}",this.gameObject.GetInstanceID(), other.gameObject.tag);
 #endif
-        if (other.gameObject.tag == "Customer")
+
+        if (!customerState.Equals(CustomerState.Serviced))
         {
-            //this.navMeshAgent.desiredVelocity.
-            //if (targetCar == null)
-            //{
+            if (other.gameObject.tag == "Customer")
+            {
+                //this.navMeshAgent.desiredVelocity.
+                //if (targetCar == null)
+                //{
                 //targetCar = other.gameObject.transform;
                 //navMeshAgent.SetDestination(targetCar.position);
-            //}
+                //}
+            }
+            else if (other.gameObject.tag == "ATMWindow")
+            {
+                ChangeState(CustomerState.InService);
+                //SetInService(true);
+            }
+            else if (other.gameObject.tag == "CustomerExit")
+            {
+                Destroy(this.gameObject);
+            }
         }
-        else if (other.gameObject.tag == "ATMWindow")
-        {
-            ChangeState(CustomerState.InService);
-            //SetInService(true);
-        }
-        else if (other.gameObject.tag == "CustomerExit")
-        {
-            Destroy(this.gameObject);
-        }
+        
     }
 
 
