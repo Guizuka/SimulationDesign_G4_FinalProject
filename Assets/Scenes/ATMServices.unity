@@ -1655,7 +1655,7 @@ Canvas:
   m_GameObject: {fileID: 566157814}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 963194227}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -2586,7 +2586,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 903346709}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.5, y: 0, z: -24.16}
+  m_LocalPosition: {x: -8.5, y: 1, z: -23}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2642,7 +2642,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 925813515}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.1, y: 0, z: -22.7}
+  m_LocalPosition: {x: 8.1, y: 0, z: -23}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4604,8 +4604,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.33, y: 2, z: 3}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.33, y: 2, z: 5.137532}
+  m_Center: {x: 0, y: 0, z: 1}
 --- !u!114 &1741770768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4641,7 +4641,6 @@ MonoBehaviour:
   vanillaBtn: {fileID: 1281495934}
   mapleBtn: {fileID: 339285373}
   peppermintBtn: {fileID: 386318666}
-  submitBtn: {fileID: 1135202079}
   serviceIntervalTimeStrategy: 0
 --- !u!114 &1741770769
 MonoBehaviour:

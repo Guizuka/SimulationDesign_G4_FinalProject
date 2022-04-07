@@ -35,7 +35,7 @@ public class Service : MonoBehaviour
     public Slider sliderTScale;
     public Dropdown sizeDropDown;
     public Dropdown baseDropDown;
-    public Button caramelBtn, chocolateBtn, strawberryBtn, vanillaBtn, mapleBtn, peppermintBtn, submitBtn;
+    public Button caramelBtn, chocolateBtn, strawberryBtn, vanillaBtn, mapleBtn, peppermintBtn;//, submitBtn;
 
     private string createOrder = "";
     private string orderList = "";
@@ -82,7 +82,11 @@ public class Service : MonoBehaviour
     private void Update()
     {
         timeScale = sliderTScale.value;
+
+        submitBtn.onClick.AddListener(CompareOrder);
+
         
+
     }
 
     private void FixedUpdate()
@@ -242,7 +246,7 @@ public class Service : MonoBehaviour
         createOrder += value;
     }
 
-    void CompareOrder()
+    public void CompareOrder()
     {
         Debug.Log(createOrder);
         Debug.Log(orderList);
