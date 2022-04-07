@@ -57,20 +57,40 @@ public class Service : MonoBehaviour
         interServiceTimeInHours = 1.0f / serviceRateAsCustomersPerHour;
         interServiceTimeInMinutes = interServiceTimeInHours * 60;
         interServiceTimeInSeconds = interServiceTimeInMinutes * 60;
-        CreateOrder();
+        //CreateOrder();
+        submitBtn.onClick.AddListener(CompareOrder);
+        sizeDropDown = GetComponent<Dropdown>();
+        sizeDropDown.onValueChanged.AddListener(delegate
+        {
+            CreateOrderList($"\nSize :\n{sizeDropDown}");
+        });
+
+        baseDropDown = GetComponent<Dropdown>();
+        baseDropDown.onValueChanged.AddListener(delegate
+        {
+            CreateOrderList($"\nBase :\n{sizeDropDown}");
+        });
+
+        caramelBtn.onClick.AddListener(CaramelOnClick);
+        chocolateBtn.onClick.AddListener(ChocolatelOnClick);
+        strawberryBtn.onClick.AddListener(StrawberryOnClick);
+        vanillaBtn.onClick.AddListener(VanillaOnClick);
+        mapleBtn.onClick.AddListener(MapleOnClick);
+        peppermintBtn.onClick.AddListener(PeppermintOnClick);
     }
 
     private void Update()
     {
         timeScale = sliderTScale.value;
-        submitBtn.onClick.AddListener(CompareOrder);
+        
     }
 
     private void FixedUpdate()
     {
         elapsedSeconds += Time.deltaTime;
         Timer.text = "Total time in seconds: " + elapsedSeconds.ToString();
-        
+        Debug.Log(orderList);
+        Debug.Log(createOrder);
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -181,62 +201,40 @@ public class Service : MonoBehaviour
         return -Mathf.Log(1 - u) / lambda;
     }
 
-    public void CreateOrder()
-    {
-        Debug.Log("creating order");
-        sizeDropDown = GetComponent<Dropdown>();
-        sizeDropDown.onValueChanged.AddListener(delegate
-        {
-            CreateOrderList($"n/Size :n/{sizeDropDown}");
-        });
-
-        baseDropDown = GetComponent<Dropdown>();
-        baseDropDown.onValueChanged.AddListener(delegate
-        {
-            CreateOrderList($"n/Base :n/{sizeDropDown}");
-        });
-
-        caramelBtn.onClick.AddListener(CaramelOnClick);
-        chocolateBtn.onClick.AddListener(ChocolatelOnClick);
-        strawberryBtn.onClick.AddListener(StrawberryOnClick);
-        vanillaBtn.onClick.AddListener(VanillaOnClick);
-        mapleBtn.onClick.AddListener(MapleOnClick);
-        peppermintBtn.onClick.AddListener(PeppermintOnClick);
-
-    }
+  
     void CaramelOnClick()
     {
         Debug.Log("Caramel");
-        createOrder += "n/Caramel";
+        createOrder += "\nCaramel";
     }
     void ChocolatelOnClick()
     {
         Debug.Log("Chocolate");
-        createOrder += "n/Chocolate";
+        createOrder += "\nChocolate";
     }
 
     void StrawberryOnClick()
     {
         Debug.Log("Strawberry");
-        createOrder += "n/Strawberry";
+        createOrder += "\nStrawberry";
     }
 
     void VanillaOnClick()
     {
         Debug.Log("Vanilla");
-        createOrder += "n/Vanilla";
+        createOrder += "\nVanilla";
     }
 
     void MapleOnClick()
     {
         Debug.Log("Maple");
-        createOrder += "n/Maple";
+        createOrder += "\nMaple";
     }
 
     void PeppermintOnClick()
     {
         Debug.Log("Peppermint");
-        createOrder += "n/Peppermint";
+        createOrder += "\nPeppermint";
     }
 
     void CreateOrderList(string value)
@@ -246,8 +244,10 @@ public class Service : MonoBehaviour
 
     void CompareOrder()
     {
-        string[] splitOrder = createOrder.Split(char.Parse("n/"));
-        string[] splitList = orderList.Split(char.Parse("n/"));
+        Debug.Log(createOrder);
+        Debug.Log(orderList);
+        string[] splitOrder = createOrder.Split(char.Parse("\n"));
+        string[] splitList = orderList.Split(char.Parse("\n"));
         bool[] correct = new bool[splitList.Length];
 
         foreach (var i in orderList)
