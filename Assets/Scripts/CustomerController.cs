@@ -99,7 +99,7 @@ public class CustomerController : MonoBehaviour
     {
         ChangeState(CustomerState.Serviced);
         
-        navMeshAgent.(targetExit.position);
+        navMeshAgent.SetDestination(targetExit.position);
         Debug.Log("In here");
         navMeshAgent.isStopped = false;
     }
