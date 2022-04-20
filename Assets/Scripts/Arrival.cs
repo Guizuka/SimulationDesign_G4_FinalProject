@@ -59,7 +59,7 @@ public class Arrival : MonoBehaviour
 
     private void Update()
     {
-        timeScale = sliderTScale.value;
+        //timeScale = sliderTScale.value;
     }
 
     IEnumerator GenerateArrivals()

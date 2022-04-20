@@ -28,7 +28,7 @@ public class Service : MonoBehaviour
     public Order order;
     Queue queueManager;
 
-    public Text Timer;
+    //public Text Timer;
     public Text orderText;
     public float elapsedSeconds = 0f;
 
@@ -72,14 +72,14 @@ public class Service : MonoBehaviour
 
     private void Update()
     {
-        timeScale = sliderTScale.value;
+        //timeScale = sliderTScale.value;
 
     }
 
     private void FixedUpdate()
     {
         elapsedSeconds += Time.deltaTime;
-        Timer.text = "Total time in seconds: " + elapsedSeconds.ToString();
+        //Timer.text = "Total time in seconds: " + elapsedSeconds.ToString();
         
         
     }
