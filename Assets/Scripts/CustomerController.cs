@@ -97,10 +97,11 @@ public class CustomerController : MonoBehaviour
     }
     public void DoServiced()
     {
-        ChangeState(CustomerState.Serviced);
-        
+        //ChangeState(CustomerState.Serviced);
+        //targetExit = GameObject.FindGameObjectWithTag("CustomerExit").transform;
+        //navMeshAgent = this.GetComponent<NavMeshAgent>();
+
         navMeshAgent.SetDestination(targetExit.position);
-        Debug.Log("In here");
         navMeshAgent.isStopped = false;
     }
     public void ChangeState(CustomerState newCarState)
@@ -146,12 +147,13 @@ public class CustomerController : MonoBehaviour
                 ChangeState(CustomerState.InService);
                 //SetInService(true);
             }
-            else if (other.gameObject.tag == "CustomerExit")
-            {
-                Destroy(this.gameObject);
-            }
+            
         }
-        
+        else if (other.gameObject.tag == "CustomerExit")
+        {
+            Destroy(this.gameObject);
+        }
+
     }
 
 
