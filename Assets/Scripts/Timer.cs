@@ -18,6 +18,6 @@ public class Timer : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        txtTimer.text = Mathf.Round(timer).ToString();
+        //txtTimer.text = Mathf.Round(timer).ToString();
     }
 }
