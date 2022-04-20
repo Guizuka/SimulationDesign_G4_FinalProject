@@ -11,7 +11,7 @@ public class TimeScale : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        txtTScale.text = "Time Scale: X" + tScale;
+        //txtTScale.text = "Time Scale: X" + tScale;
         Time.timeScale = 1;
     }
 
@@ -20,7 +20,7 @@ public class TimeScale : MonoBehaviour
     {
         tScale = sliderTScale.value;
         Time.timeScale = tScale;
-        txtTScale.text = "Time Scale: X" + tScale;
+        //txtTScale.text = "Time Scale: X" + tScale;
     }
 
 }
