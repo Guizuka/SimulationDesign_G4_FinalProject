@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class Service : MonoBehaviour
 {
+    public int numOrderCompleted;
+
     public GameObject customerInService;
     public Transform customerExitPlace;
 
@@ -37,8 +39,8 @@ public class Service : MonoBehaviour
     public Dropdown baseDropDown;
     public Button caramelBtn, chocolateBtn, strawberryBtn, vanillaBtn, mapleBtn, peppermintBtn, submitBtn;
 
-    private string createOrder = "";
-    private string orderList = "";
+    private string UserCreatedOrder = "";
+    private string RandOrderItems = "";
     private string orderMessage = "Order is Correct!";
 
     public enum ServiceIntervalTimeStrategy
@@ -58,22 +60,7 @@ public class Service : MonoBehaviour
         interServiceTimeInMinutes = interServiceTimeInHours * 60;
         interServiceTimeInSeconds = interServiceTimeInMinutes * 60;
 
-        createOrder = "Order: ";
         submitBtn.onClick.AddListener(CompareOrder);
-
-        sizeDropDown.onValueChanged.AddListener(delegate
-        {
-            Debug.Log(sizeDropDown.options[sizeDropDown.value].text);
-            CreateOrderList($"\nSize: {sizeDropDown.options[sizeDropDown.value].text}");
-        });
-
-        baseDropDown.onValueChanged.AddListener(delegate
-        {
-            Debug.Log(baseDropDown.options[sizeDropDown.value].text);
-            CreateOrderList($"\nBase: {baseDropDown.options[sizeDropDown.value].text}");
-        });
-
-
 
         caramelBtn.onClick.AddListener(CaramelOnClick);
         chocolateBtn.onClick.AddListener(ChocolatelOnClick);
@@ -87,17 +74,14 @@ public class Service : MonoBehaviour
     {
         timeScale = sliderTScale.value;
 
-
-        
-
     }
 
     private void FixedUpdate()
     {
         elapsedSeconds += Time.deltaTime;
         Timer.text = "Total time in seconds: " + elapsedSeconds.ToString();
-        //Debug.Log(orderList);
-        //Debug.Log(createOrder);
+        
+        
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -120,6 +104,7 @@ public class Service : MonoBehaviour
 
     public void GetRandomOrderValues()
     {
+        RandOrderItems = "";
         orderedAdditions.Clear();
         orderText.text = "Order: ";
         int index;
@@ -146,13 +131,20 @@ public class Service : MonoBehaviour
             index = random.Next(additionsValues.Length);
             addition = (Additions)additionsValues.GetValue(index);
             orderedAdditions.Add(addition);
+
+            RandOrderItems += addition + "\n";
+
         }
+
+        RandOrderItems += orderedSize + "\n";
+        RandOrderItems += orderedBase;
+        Debug.Log(RandOrderItems);
         orderText.text += ("\nAdditions: ");
         foreach (var add in orderedAdditions)
         {
             orderText.text += "\n" + add;
         }
-        orderList = orderText.text;
+        //orderList = orderText.text;
     }
 
     IEnumerator GenerateServices()
@@ -212,54 +204,54 @@ public class Service : MonoBehaviour
     void CaramelOnClick()
     {
         Debug.Log("Caramel");
-        createOrder += "\nCaramel";
+        UserCreatedOrder += "Caramel\n";
     }
     void ChocolatelOnClick()
     {
         Debug.Log("Chocolate");
-        createOrder += "\nChocolate";
+        UserCreatedOrder += "Chocolate\n";
     }
 
     void StrawberryOnClick()
     {
         Debug.Log("Strawberry");
-        createOrder += "\nStrawberry";
+        UserCreatedOrder += "Strawberry\n";
     }
 
     void VanillaOnClick()
     {
         Debug.Log("Vanilla");
-        createOrder += "\nVanilla";
+        UserCreatedOrder += "Vanilla\n";
     }
 
     void MapleOnClick()
     {
         Debug.Log("Maple");
-        createOrder += "\nMaple";
+        UserCreatedOrder += "Maple\n";
     }
 
     void PeppermintOnClick()
     {
         Debug.Log("Peppermint");
-        createOrder += "\nPeppermint";
+        UserCreatedOrder += "Peppermint\n";
     }
 
-    void CreateOrderList(string value)
-    {
-        createOrder += value;
-    }
 
     public void CompareOrder()
     {
-        Debug.Log(createOrder);
-        Debug.Log(orderList);
-        string[] splitOrder = createOrder.Split(char.Parse("\n"));
-        string[] splitList = orderList.Split(char.Parse("\n"));
-        bool[] correct = new bool[splitList.Length];
+        UserCreatedOrder += sizeDropDown.options[sizeDropDown.value].text + "\n";
+        UserCreatedOrder += baseDropDown.options[sizeDropDown.value].text;
 
-        foreach (var i in orderList)
+        string[] splitOrder = UserCreatedOrder.Split(char.Parse("\n"));
+        string[] RandSplitList = RandOrderItems.Split(char.Parse("\n"));
+        
+        
+        bool[] correct = new bool[RandSplitList.Length];
+        
+        for (int i = 0; i < RandSplitList.Length; i++)
         {
-            if (splitOrder[i] == splitList[i])
+            
+            if (RandOrderItems.Contains(splitOrder[i]))
             {
                 correct[i] = true;
             }
@@ -267,19 +259,27 @@ public class Service : MonoBehaviour
             {
                 correct[i] = false;
             }
+            
         }
 
-        Debug.Log(correct);
-
-        
-
+        int x = 0;
         for (int i = 0; i < correct.Length; i++)
         {
+            
             if (!correct[i])
             {
-                orderMessage = "Order is wrong!";
+                x += 1;
+                orderText.text = "Order is wrong!";
+                customerInService.GetComponent<CustomerController>().ChangeState(CustomerController.CustomerState.Serviced);
                 break;
             }
+            
+        }
+        if (x == 0)
+        {
+            orderText.text = "Order Completed!";
+            customerInService.GetComponent<CustomerController>().ChangeState(CustomerController.CustomerState.Serviced);
+            numOrderCompleted += 1;
         }
 
 
