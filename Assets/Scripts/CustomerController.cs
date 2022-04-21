@@ -80,11 +80,7 @@ public class CustomerController : MonoBehaviour
     }
     void DoEntered()
     {
-
         targetCustomer = targetWindow;
-
-        queueManager = GameObject.FindGameObjectWithTag("ATMWindow").GetComponent<Queue>();
-        queueManager.Add(this.gameObject);
 
         navMeshAgent.SetDestination(targetCustomer.position);
         navMeshAgent.isStopped = false;
@@ -92,15 +88,12 @@ public class CustomerController : MonoBehaviour
     void DoInService()
     {
         navMeshAgent.isStopped = true;
-        
-        
+        queueManager = GameObject.FindGameObjectWithTag("ATMWindow").GetComponent<Queue>();
+        queueManager.Add(this.gameObject);
+
     }
     public void DoServiced()
     {
-        //ChangeState(CustomerState.Serviced);
-        //targetExit = GameObject.FindGameObjectWithTag("CustomerExit").transform;
-        //navMeshAgent = this.GetComponent<NavMeshAgent>();
-
         navMeshAgent.SetDestination(targetExit.position);
         navMeshAgent.isStopped = false;
     }
@@ -114,7 +107,7 @@ public class CustomerController : MonoBehaviour
     {
         elapsedSeconds += Time.deltaTime;
         //Timer.text = elapsedSeconds.ToString();
-        FSMCustomer();
+        //FSMCustomer();
     }
     public void SetInService(bool value)
     {

@@ -11,6 +11,7 @@ TagManager:
   - CustomerExit
   - ATMWindow
   - Timer
+  - Fluid
   layers:
   - Default
   - TransparentFX

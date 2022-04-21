@@ -9,6 +9,8 @@ public class Service : MonoBehaviour
     public int numOrderCompleted;
 
     public GameObject customerInService;
+    public GameObject GameController;
+    public Text currentOrderText;
     public Transform customerExitPlace;
 
     public float serviceRateAsCustomersPerHour = 20; // customer/hour
@@ -62,12 +64,16 @@ public class Service : MonoBehaviour
 
         submitBtn.onClick.AddListener(CompareOrder);
 
+        sizeDropDown.value = 0;
+        baseDropDown.value = 0;
+
         caramelBtn.onClick.AddListener(CaramelOnClick);
         chocolateBtn.onClick.AddListener(ChocolatelOnClick);
         strawberryBtn.onClick.AddListener(StrawberryOnClick);
         vanillaBtn.onClick.AddListener(VanillaOnClick);
         mapleBtn.onClick.AddListener(MapleOnClick);
         peppermintBtn.onClick.AddListener(PeppermintOnClick);
+        GameController = GameObject.FindGameObjectWithTag("GameController");
     }
 
     private void Update()
@@ -80,26 +86,46 @@ public class Service : MonoBehaviour
     {
         elapsedSeconds += Time.deltaTime;
         //Timer.text = "Total time in seconds: " + elapsedSeconds.ToString();
-        
-        
+
+        currentOrderText.text = UserCreatedOrder;
+
+        if (elapsedSeconds > 100)
+        {
+            if(numOrderCompleted == 5)
+            {
+                GameController.GetComponent<SceneController>().LoadVictory();
+            }
+            else
+            {
+                GameController.GetComponent<SceneController>().LoadLose();
+            }
+        }
+        else if(numOrderCompleted == 5)
+        {
+            GameController.GetComponent<SceneController>().LoadVictory();
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.CompareTag("Customer"))
+        {
+            if (customerInService != other.gameObject)
+            {
+                customerInService = other.gameObject;
+                customerInService.GetComponent<CustomerController>().SetInService(true);
+                Debug.Log("Customer is Here: " + other.gameObject.name);
+                GetRandomOrderValues();
+                order = new Order(orderedAdditions, orderedSize, orderedBase);
+
+                //generateServices = true;
+                //StartCoroutine(GenerateServices());
+            }
+        }
 #if DEBUG_SP
         print("ServiceProcess.OnTriggerEnter:otherID=" + other.gameObject.GetInstanceID());
 #endif
 
-        if (other.gameObject.tag == "Customer")
-        {
-            customerInService = other.gameObject;
-            customerInService.GetComponent<CustomerController>().SetInService(true);
 
-            GetRandomOrderValues();
-            order = new Order(orderedAdditions, orderedSize, orderedBase);
-
-            //generateServices = true;
-            //StartCoroutine(GenerateServices());
-        }
     }
 
     public void GetRandomOrderValues()
@@ -144,13 +170,14 @@ public class Service : MonoBehaviour
         {
             orderText.text += "\n" + add;
         }
+
         //orderList = orderText.text;
     }
 
     IEnumerator GenerateServices()
     {
-        GetRandomOrderValues();
-        order = new Order(orderedAdditions, orderedSize, orderedBase);
+        //GetRandomOrderValues();
+        //order = new Order(orderedAdditions, orderedSize, orderedBase);
 
         
         while (generateServices)
@@ -203,36 +230,30 @@ public class Service : MonoBehaviour
   
     void CaramelOnClick()
     {
-        Debug.Log("Caramel");
         UserCreatedOrder += "Caramel\n";
     }
     void ChocolatelOnClick()
     {
-        Debug.Log("Chocolate");
         UserCreatedOrder += "Chocolate\n";
     }
 
     void StrawberryOnClick()
     {
-        Debug.Log("Strawberry");
         UserCreatedOrder += "Strawberry\n";
     }
 
     void VanillaOnClick()
     {
-        Debug.Log("Vanilla");
         UserCreatedOrder += "Vanilla\n";
     }
 
     void MapleOnClick()
     {
-        Debug.Log("Maple");
         UserCreatedOrder += "Maple\n";
     }
 
     void PeppermintOnClick()
     {
-        Debug.Log("Peppermint");
         UserCreatedOrder += "Peppermint\n";
     }
 
@@ -240,37 +261,46 @@ public class Service : MonoBehaviour
     public void CompareOrder()
     {
         UserCreatedOrder += sizeDropDown.options[sizeDropDown.value].text + "\n";
-        UserCreatedOrder += baseDropDown.options[sizeDropDown.value].text;
+        UserCreatedOrder += baseDropDown.options[baseDropDown.value].text;
+        
+        sizeDropDown.value = 0;
+        baseDropDown.value = 0;
 
         string[] splitOrder = UserCreatedOrder.Split(char.Parse("\n"));
         string[] RandSplitList = RandOrderItems.Split(char.Parse("\n"));
-        
-        
+
+        Debug.Log(splitOrder.Length);
+        Debug.Log(RandSplitList.Length);
+
         bool[] correct = new bool[RandSplitList.Length];
-        
-        for (int i = 0; i < RandSplitList.Length; i++)
+
+        if (splitOrder.Length == RandSplitList.Length)
         {
-            
-            if (RandOrderItems.Contains(splitOrder[i]))
+            Debug.Log(RandOrderItems);
+            Debug.Log(UserCreatedOrder);
+            for (int i = 0; i < RandSplitList.Length; i++)
             {
-                correct[i] = true;
+                if (RandOrderItems.Contains(splitOrder[i]))
+                {
+                    correct[i] = true;
+                }
+                else
+                {
+                    correct[i] = false;
+                }
             }
-            else
-            {
-                correct[i] = false;
-            }
-            
         }
 
         int x = 0;
         for (int i = 0; i < correct.Length; i++)
         {
-            
+            //Debug.Log(correct[i]);
             if (!correct[i])
             {
                 x += 1;
                 orderText.text = "Order is wrong!";
                 customerInService.GetComponent<CustomerController>().ChangeState(CustomerController.CustomerState.Serviced);
+                UserCreatedOrder = "";
                 break;
             }
             
@@ -280,6 +310,7 @@ public class Service : MonoBehaviour
             orderText.text = "Order Completed!";
             customerInService.GetComponent<CustomerController>().ChangeState(CustomerController.CustomerState.Serviced);
             numOrderCompleted += 1;
+            UserCreatedOrder = "";
         }
 
 
