@@ -18,6 +18,7 @@ public class Service : MonoBehaviour
     private float interServiceTimeInMinutes;
     private float interServiceTimeInSeconds;
 
+
     public bool generateServices = false;
     // minimum and maximum interservice time in seconds
     public float minInterServiceTimeInSeconds = 3;
@@ -28,6 +29,7 @@ public class Service : MonoBehaviour
     public Base orderedBase;
     public List<Additions> orderedAdditions;
     public Order order;
+
     Queue queueManager;
 
     //public Text Timer;
@@ -298,6 +300,7 @@ public class Service : MonoBehaviour
             if (!correct[i])
             {
                 x += 1;
+                Score.scoreValue -= 5;
                 orderText.text = "Order is wrong!";
                 customerInService.GetComponent<CustomerController>().ChangeState(CustomerController.CustomerState.Serviced);
                 UserCreatedOrder = "";
@@ -305,13 +308,27 @@ public class Service : MonoBehaviour
             }
             
         }
+
         if (x == 0)
         {
+            Score.scoreValue -= 7;
+            orderText.text = "Time out";
+            customerInService.GetComponent<CustomerController>().ChangeState(CustomerController.CustomerState.Serviced);
+            UserCreatedOrder = "";
+            
+        }
+
+        if (x == 0)
+        {
+            Score.scoreValue += 10; 
             orderText.text = "Order Completed!";
             customerInService.GetComponent<CustomerController>().ChangeState(CustomerController.CustomerState.Serviced);
             numOrderCompleted += 1;
             UserCreatedOrder = "";
+
+           
         }
+      
 
 
 
