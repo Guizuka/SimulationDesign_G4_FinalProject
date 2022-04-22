@@ -6,18 +6,23 @@ using UnityEngine.UI;
 
 public class SceneController : MonoBehaviour
 {
+    public Text scoreText;
+   
+    void Start()
+    {
+        int score = PlayerPrefs.GetInt("score");
+        scoreText.text = score.ToString();
+    }
     public void LoadMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
     }
     public void LoadVictory()
     {
-        PlayerPrefs.SetInt("Score is : ", Score.scoreValue);
         SceneManager.LoadScene("WinScene");
     }
     public void LoadLose()
     {
-        PlayerPrefs.SetInt("Score is: ", Score.scoreValue);
         SceneManager.LoadScene("LostScene");
     }
     public void LoadGame()

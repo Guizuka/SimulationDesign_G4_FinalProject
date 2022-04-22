@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class Service : MonoBehaviour
 {
+    public int score;
     public int numOrderCompleted;
 
     public GameObject customerInService;
@@ -118,22 +119,28 @@ public class Service : MonoBehaviour
     {
         elapsedSeconds += Time.deltaTime;
         //Timer.text = "Total time in seconds: " + elapsedSeconds.ToString();
-
+        score = Score.scoreValue;
         currentOrderText.text = UserCreatedOrder;
 
         if (elapsedSeconds > 100)
         {
             if(numOrderCompleted == 5)
             {
+                PlayerPrefs.SetInt("score", Score.scoreValue);
+                PlayerPrefs.Save();
                 GameController.GetComponent<SceneController>().LoadVictory();
             }
             else
             {
+                PlayerPrefs.SetInt("score", Score.scoreValue);
+                PlayerPrefs.Save();
                 GameController.GetComponent<SceneController>().LoadLose();
             }
         }
         else if(numOrderCompleted == 5)
         {
+            PlayerPrefs.SetInt("score", Score.scoreValue);
+            PlayerPrefs.Save();
             GameController.GetComponent<SceneController>().LoadVictory();
         }
     }
