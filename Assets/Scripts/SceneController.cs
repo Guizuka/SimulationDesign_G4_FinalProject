@@ -12,10 +12,12 @@ public class SceneController : MonoBehaviour
     }
     public void LoadVictory()
     {
+        PlayerPrefs.SetInt("Score is : ", Score.scoreValue);
         SceneManager.LoadScene("WinScene");
     }
     public void LoadLose()
     {
+        PlayerPrefs.SetInt("Score is: ", Score.scoreValue);
         SceneManager.LoadScene("LostScene");
     }
     public void LoadGame()
