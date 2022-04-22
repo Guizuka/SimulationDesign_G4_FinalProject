@@ -39,10 +39,16 @@ public class Service : MonoBehaviour
     public float timeScale = 1;
 
     public Slider sliderTScale;
-    public Dropdown sizeDropDown;
-    public Dropdown baseDropDown;
+    //public Dropdown sizeDropDown;
+    //public Dropdown baseDropDown;
+    public Text sizeChoice;
+    public Text baseChoice;
     public Button caramelBtn, chocolateBtn, strawberryBtn, vanillaBtn, mapleBtn, peppermintBtn, submitBtn;
+    public Button largeBtn, mediumBtn, smallBtn;
+    public Button juiceBtn, teaBtn, coffeeBtn;
 
+    private string txtSizeChoice;
+    private string txtBaseChoice;
     private string UserCreatedOrder = "";
     private string RandOrderItems = "";
     private string orderMessage = "Order is Correct!";
@@ -66,8 +72,8 @@ public class Service : MonoBehaviour
 
         submitBtn.onClick.AddListener(CompareOrder);
 
-        sizeDropDown.value = 0;
-        baseDropDown.value = 0;
+        //sizeDropDown.value = 0;
+        //baseDropDown.value = 0;
 
         caramelBtn.onClick.AddListener(CaramelOnClick);
         chocolateBtn.onClick.AddListener(ChocolatelOnClick);
@@ -75,7 +81,17 @@ public class Service : MonoBehaviour
         vanillaBtn.onClick.AddListener(VanillaOnClick);
         mapleBtn.onClick.AddListener(MapleOnClick);
         peppermintBtn.onClick.AddListener(PeppermintOnClick);
+
+        largeBtn.onClick.AddListener(LargeOnClick);
+        mediumBtn.onClick.AddListener(MediumOnClick);
+        smallBtn.onClick.AddListener(SmallOnClick);
+
+        juiceBtn.onClick.AddListener(JuiceOnClick);
+        teaBtn.onClick.AddListener(TeaOnClick);
+        coffeeBtn.onClick.AddListener(CoffeeOnClick);
+
         GameController = GameObject.FindGameObjectWithTag("GameController");
+
     }
 
     private void Update()
@@ -230,43 +246,35 @@ public class Service : MonoBehaviour
     }
 
   
-    void CaramelOnClick()
-    {
-        UserCreatedOrder += "Caramel\n";
-    }
-    void ChocolatelOnClick()
-    {
-        UserCreatedOrder += "Chocolate\n";
-    }
+    void CaramelOnClick()    { UserCreatedOrder += "Caramel\n"; }
+    void ChocolatelOnClick() { UserCreatedOrder += "Chocolate\n"; }
+    void StrawberryOnClick() { UserCreatedOrder += "Strawberry\n"; }
+    void VanillaOnClick()    { UserCreatedOrder += "Vanilla\n"; }
+    void MapleOnClick()      { UserCreatedOrder += "Maple\n"; }
+    void PeppermintOnClick() { UserCreatedOrder += "Peppermint\n"; }
 
-    void StrawberryOnClick()
-    {
-        UserCreatedOrder += "Strawberry\n";
-    }
+    void LargeOnClick() { txtSizeChoice = "Large"; sizeChoice.text = txtSizeChoice; }
+    void MediumOnClick() { txtSizeChoice = "Medium"; sizeChoice.text = txtSizeChoice; }
+    void SmallOnClick() { txtSizeChoice = "Small"; sizeChoice.text = txtSizeChoice; }
 
-    void VanillaOnClick()
-    {
-        UserCreatedOrder += "Vanilla\n";
-    }
-
-    void MapleOnClick()
-    {
-        UserCreatedOrder += "Maple\n";
-    }
-
-    void PeppermintOnClick()
-    {
-        UserCreatedOrder += "Peppermint\n";
-    }
+    void JuiceOnClick() { txtBaseChoice = "Juice"; baseChoice.text = txtBaseChoice; }
+    void TeaOnClick() { txtBaseChoice = "Tea"; baseChoice.text = txtBaseChoice; }
+    void CoffeeOnClick() { txtBaseChoice = "Coffee"; baseChoice.text = txtBaseChoice; }
 
 
     public void CompareOrder()
     {
-        UserCreatedOrder += sizeDropDown.options[sizeDropDown.value].text + "\n";
-        UserCreatedOrder += baseDropDown.options[baseDropDown.value].text;
-        
-        sizeDropDown.value = 0;
-        baseDropDown.value = 0;
+        UserCreatedOrder += txtSizeChoice + "\n";
+        UserCreatedOrder += txtBaseChoice;
+
+        //UserCreatedOrder += sizeDropDown.options[sizeDropDown.value].text + "\n";
+        //UserCreatedOrder += baseDropDown.options[baseDropDown.value].text;
+        txtBaseChoice = "-";
+        txtSizeChoice = "-";
+        sizeChoice.text = "";
+        baseChoice.text = "";
+        //sizeDropDown.value = 0;
+        //baseDropDown.value = 0;
 
         string[] splitOrder = UserCreatedOrder.Split(char.Parse("\n"));
         string[] RandSplitList = RandOrderItems.Split(char.Parse("\n"));
@@ -306,7 +314,6 @@ public class Service : MonoBehaviour
                 UserCreatedOrder = "";
                 break;
             }
-            
         }
 
         if (x == 0)
@@ -315,7 +322,6 @@ public class Service : MonoBehaviour
             orderText.text = "Time out";
             customerInService.GetComponent<CustomerController>().ChangeState(CustomerController.CustomerState.Serviced);
             UserCreatedOrder = "";
-            
         }
 
         if (x == 0)
@@ -325,14 +331,7 @@ public class Service : MonoBehaviour
             customerInService.GetComponent<CustomerController>().ChangeState(CustomerController.CustomerState.Serviced);
             numOrderCompleted += 1;
             UserCreatedOrder = "";
-
-           
         }
-      
-
-
-
     }
-
 }
 
