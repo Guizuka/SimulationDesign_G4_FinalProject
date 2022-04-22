@@ -19006,6 +19006,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1083509535}
   - component: {fileID: 1083509534}
+  - component: {fileID: 1083509536}
+  - component: {fileID: 1083509537}
   m_Layer: 0
   m_Name: SceneController
   m_TagString: GameController
@@ -19039,6 +19041,39 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1083509536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1083509533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f72b91d7a41345746bb2cbfcac9c5901, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: a7ce295eb37fffb4b9558bb31cda11e0, type: 2}
+  sound:
+  - {audioMixerGroup: {fileID: 24300002, guid: a7ce295eb37fffb4b9558bb31cda11e0, type: 2}, source: {fileID: 0}, clipName: ThemeSong, clip: {fileID: 8300000,
+      guid: afcbac59004d5a24eadd8091424136e5, type: 3}, volume: 1, pitch: 1.6, loop: 1, playOnAwake: 0}
+  - {audioMixerGroup: {fileID: 24300002, guid: a7ce295eb37fffb4b9558bb31cda11e0, type: 2}, source: {fileID: 0}, clipName: WrongSound, clip: {fileID: 8300000,
+      guid: 3f7a4443e6463a44db96942eb3a87bc0, type: 3}, volume: 1, pitch: 1.56, loop: 0, playOnAwake: 0}
+--- !u!114 &1083509537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1083509533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36318d1b84e607c4f9d264a1aeee9f93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musics:
+  - soundName: ThemeSong
+    clip: {fileID: 8300000, guid: afcbac59004d5a24eadd8091424136e5, type: 3}
 --- !u!1001 &1083546275
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27325,6 +27360,15 @@ MonoBehaviour:
   juiceBtn: {fileID: 333419907}
   teaBtn: {fileID: 1766931291}
   coffeeBtn: {fileID: 310437499}
+  correctSound:
+    soundName: CorrectSound
+    clip: {fileID: 8300000, guid: ba2d3f202b8704f4f9169b82196e5f8a, type: 3}
+  incorrectSound:
+    soundName: IncorrectSound
+    clip: {fileID: 8300000, guid: 3f7a4443e6463a44db96942eb3a87bc0, type: 3}
+  selectionSound:
+    soundName: SelectionSound
+    clip: {fileID: 8300000, guid: 571b1451b4fd668489b9c0b205e30919, type: 3}
   serviceIntervalTimeStrategy: 0
 --- !u!114 &1741770769
 MonoBehaviour:

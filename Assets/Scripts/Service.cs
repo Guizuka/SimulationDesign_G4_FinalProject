@@ -53,6 +53,15 @@ public class Service : MonoBehaviour
     private string RandOrderItems = "";
     private string orderMessage = "Order is Correct!";
 
+    private Sounds sounds = new Sounds();
+    [SerializeField]
+    Sounds correctSound;
+
+    [SerializeField]
+    Sounds incorrectSound;
+    [SerializeField]
+    Sounds selectionSound;
+
     public enum ServiceIntervalTimeStrategy
     {
         ConstantIntervalTime,
@@ -66,6 +75,7 @@ public class Service : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         interServiceTimeInHours = 1.0f / serviceRateAsCustomersPerHour;
         interServiceTimeInMinutes = interServiceTimeInHours * 60;
         interServiceTimeInSeconds = interServiceTimeInMinutes * 60;
@@ -91,6 +101,10 @@ public class Service : MonoBehaviour
         coffeeBtn.onClick.AddListener(CoffeeOnClick);
 
         GameController = GameObject.FindGameObjectWithTag("GameController");
+
+        sounds.LoadSound(correctSound);
+        sounds.LoadSound(incorrectSound);
+        sounds.LoadSound(selectionSound);
 
     }
 
@@ -246,20 +260,20 @@ public class Service : MonoBehaviour
     }
 
   
-    void CaramelOnClick()    { UserCreatedOrder += "Caramel\n"; }
-    void ChocolatelOnClick() { UserCreatedOrder += "Chocolate\n"; }
-    void StrawberryOnClick() { UserCreatedOrder += "Strawberry\n"; }
-    void VanillaOnClick()    { UserCreatedOrder += "Vanilla\n"; }
-    void MapleOnClick()      { UserCreatedOrder += "Maple\n"; }
-    void PeppermintOnClick() { UserCreatedOrder += "Peppermint\n"; }
+    void CaramelOnClick()    { UserCreatedOrder += "Caramel\n"; selectionSound.Play(); }
+    void ChocolatelOnClick() { UserCreatedOrder += "Chocolate\n"; selectionSound.Play(); }
+    void StrawberryOnClick() { UserCreatedOrder += "Strawberry\n"; selectionSound.Play(); }
+    void VanillaOnClick()    { UserCreatedOrder += "Vanilla\n"; selectionSound.Play(); }
+    void MapleOnClick()      { UserCreatedOrder += "Maple\n"; selectionSound.Play(); }
+    void PeppermintOnClick() { UserCreatedOrder += "Peppermint\n"; selectionSound.Play(); }
 
-    void LargeOnClick() { txtSizeChoice = "Large"; sizeChoice.text = txtSizeChoice; }
-    void MediumOnClick() { txtSizeChoice = "Medium"; sizeChoice.text = txtSizeChoice; }
-    void SmallOnClick() { txtSizeChoice = "Small"; sizeChoice.text = txtSizeChoice; }
+    void LargeOnClick() { txtSizeChoice = "Large"; sizeChoice.text = txtSizeChoice; selectionSound.Play(); }
+    void MediumOnClick() { txtSizeChoice = "Medium"; sizeChoice.text = txtSizeChoice; selectionSound.Play(); }
+    void SmallOnClick() { txtSizeChoice = "Small"; sizeChoice.text = txtSizeChoice; selectionSound.Play(); }
 
-    void JuiceOnClick() { txtBaseChoice = "Juice"; baseChoice.text = txtBaseChoice; }
-    void TeaOnClick() { txtBaseChoice = "Tea"; baseChoice.text = txtBaseChoice; }
-    void CoffeeOnClick() { txtBaseChoice = "Coffee"; baseChoice.text = txtBaseChoice; }
+    void JuiceOnClick() { txtBaseChoice = "Juice"; baseChoice.text = txtBaseChoice; selectionSound.Play(); }
+    void TeaOnClick() { txtBaseChoice = "Tea"; baseChoice.text = txtBaseChoice; selectionSound.Play(); }
+    void CoffeeOnClick() { txtBaseChoice = "Coffee"; baseChoice.text = txtBaseChoice; selectionSound.Play(); }
 
 
     public void CompareOrder()
@@ -312,6 +326,7 @@ public class Service : MonoBehaviour
                 orderText.text = "Order is wrong!";
                 customerInService.GetComponent<CustomerController>().ChangeState(CustomerController.CustomerState.Serviced);
                 UserCreatedOrder = "";
+                incorrectSound.Play();
                 break;
             }
         }
@@ -331,6 +346,7 @@ public class Service : MonoBehaviour
             customerInService.GetComponent<CustomerController>().ChangeState(CustomerController.CustomerState.Serviced);
             numOrderCompleted += 1;
             UserCreatedOrder = "";
+            correctSound.Play();
         }
     }
 }
